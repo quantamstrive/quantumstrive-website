@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumStrive - Automation Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000000;
+            color: #FFFFFF;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Pixel Grid Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        /* Geometric Shapes */
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+
+        .shape-square {
+            width: 80px;
+            height: 80px;
+        }
+
+        .shape-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .shape-rect {
+            width: 120px;
+            height: 60px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 72px;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 48px;
+            margin-bottom: 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            width: 60px;
+            height: 2px;
+            background: #FFFFFF;
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 18px 48px;
+            border: 2px solid #FFFFFF;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .btn:hover {
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 200px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero .shape-square {
+            top: 10%;
+            right: 15%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero .shape-circle {
+            bottom: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* About */
+        .about {
+            background: rgba(255, 255, 255, 0.03);
+            text-align: center;
+            position: relative;
+        }
+
+        .about .shape-rect {
+            top: 15%;
+            right: 5%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .about p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+        /* Services */
+        .services {
+            position: relative;
+        }
+
+        .services .shape-square {
+            top: 10%;
+            left: 5%;
+            animation: float 9s ease-in-out infinite;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 48px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 24px;
+            stroke: #FFFFFF;
+            stroke-width: 1.5;
+        }
+
+        /* Why Choose */
+        .why {
+            position: relative;
+        }
+
+        .why .shape-circle {
+            bottom: 10%;
+            right: 8%;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 20px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .why-icon {
+            width: 32px;
+            height: 32px;
+            stroke: #FFFFFF;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        /* Case Studies */
+        .cases {
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+
+        .cases .shape-rect {
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .case-card {
+            background: #000000;
+            padding: 40px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .case-card:hover {
+            border-color: #FFFFFF;
+            transform: translateY(-5px);
+        }
+
+        .case-card h3 {
+            margin-bottom: 16px;
+        }
+
+        /* Pricing */
+        .pricing {
+            position: relative;
+        }
+
+        .pricing .shape-square {
+            top: 15%;
+            right: 10%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .pricing-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 64px 48px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .price-item {
+            margin-bottom: 32px;
+        }
+
+        .price-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .price {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .price-label {
+            font-size: 13px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 48px 0;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            padding: 160px 0;
+            position: relative;
+        }
+
+        .contact .shape-circle {
+            top: 20%;
+            left: 15%;
+            animation: float 9s ease-in-out infinite;
+        }
+
+        .contact h2 {
+            margin-bottom: 48px;
+        }
+
+        /* Glitch effect on hover for headings */
+        h1:hover {
+            animation: glitch 0.3s;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 42px;
+            }
+
+            h2 {
+                font-size: 32px;
+            }
+
+            .services-grid,
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .container {
+                padding: 0 24px;
+            }
+
+            .shape {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="shape shape-square"></div>
+        <div class="shape shape-circle"></div>
+        <div class="container">
+            <h1>AUTOMATE EVERYTHING.<br>FOCUS ON GROWTH.</h1>
+            <p>We build custom automation systems that save time, cut costs, and scale your business on autopilot.</p>
+            <a href="#contact" class="btn">Start Automating</a>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- About -->
+    <section class="about">
+        <div class="shape shape-rect"></div>
+        <div class="container">
+            <h2>About QuantumStrive</h2>
+            <p>We're a team of automation specialists who help businesses eliminate repetitive tasks and scale efficiently. From workflow automation to AI integration, we build systems that work while you sleep. No fluff, just results.</p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Services -->
+    <section class="services">
+        <div class="shape shape-square"></div>
+        <div class="container">
+            <h2>What We Do</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Workflow Automation</h3>
+                    <p>Automate repetitive tasks and connect your tools seamlessly.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 6V12L16 14" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>AI Integration</h3>
+                    <p>Add intelligence to your workflows with custom AI solutions.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18H19C20.1046 18 21 17.1046 21 16Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 10H21" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>CRM Automation</h3>
+                    <p>Keep your customer data clean and synced automatically.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 6L12 13L2 6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Email Automation</h3>
+                    <p>Send personalized emails at scale without lifting a finger.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 3V21" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18 17L22 12L18 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 12H22" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Data Pipeline Setup</h3>
+                    <p>Move data between systems with zero manual work.</p>
+                </div>
+                <div class="service-card">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18" cy="5" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="6" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="18" cy="19" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.59 13.51L15.42 17.49" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.41 6.51L8.59 10.49" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Custom Integrations</h3>
+                    <p>Build bridges between any tools your business uses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Why Choose Us -->
+    <section class="why">
+        <div class="shape shape-circle"></div>
+        <div class="container">
+            <h2>Why Choose Us</h2>
+            <div class="why-grid">
+                <div class="why-item">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <h3>Fast Implementation</h3>
+                        <p>Most automations live within 2 weeks.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <h3>No Lock-In Contracts</h3>
+                        <p>Cancel anytime, no questions asked.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <h3>Ongoing Support</h3>
+                        <p>We maintain and optimize your systems monthly.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <h3>ROI Guaranteed</h3>
+                        <p>Save 10+ hours per week minimum or we refund you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Case Studies -->
+    <section class="cases">
+        <div class="shape shape-rect"></div>
+        <div class="container">
+            <h2>Recent Wins</h2>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <h3>E-commerce Brand</h3>
+                    <p>Automated order processing and customer support. Saved 20 hours/week and increased response time by 80%.</p>
+                </div>
+                <div class="case-card">
+                    <h3>Marketing Agency</h3>
+                    <p>Built a lead nurturing system that syncs CRM, email, and Slack. Now handles 300+ leads on autopilot.</p>
+                </div>
+                <div class="case-card">
+                    <h3>SaaS Startup</h3>
+                    <p>Integrated AI chatbot with support tickets. Cut manual work by 60% and improved customer satisfaction scores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Pricing -->
+    <section class="pricing">
+        <div class="shape shape-square"></div>
+        <div class="container">
+            <h2>Simple Pricing</h2>
+            <div class="pricing-container">
+                <div class="price-item">
+                    <div class="price">$2,500</div>
+                    <div class="price-label">One-time setup fee</div>
+                </div>
+                <div class="price-divider"></div>
+                <div class="price-item">
+                    <div class="price">$800</div>
+                    <div class="price-label">Monthly automation management</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="shape shape-circle"></div>
+        <div class="container">
+            <h2>Let's Automate Your Business</h2>
+            <a href="mailto:hello@quantumstrive.com" class="btn">Get In Touch</a>
+        </div>
+    </section>
+</body>
+</html>
